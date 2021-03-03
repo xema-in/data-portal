@@ -27,6 +27,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppComponent } from './app.component';
 import { LoginLayoutComponent } from './login-layout/login-layout.component';
@@ -45,6 +47,8 @@ const routes: Routes = [
     component: AppLayoutComponent,
     children: [
       { path: '', component: DashboardComponent, pathMatch: 'full' },
+      { path: 'recordings/search', component: DashboardComponent },
+      { path: 'reports/cdr', component: DashboardComponent },
     ]
   },
 
@@ -75,14 +79,14 @@ const routes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { useHash: true }),
     ReactiveFormsModule,
 
     MatButtonModule, MatCardModule, MatDialogModule, MatTableModule, MatSortModule,
     MatInputModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule,
     MatTabsModule, MatSidenavModule, MatBadgeModule, MatFormFieldModule, MatIconModule,
     MatToolbarModule, MatDividerModule, MatGridListModule, MatSelectModule, MatProgressBarModule,
-    MatChipsModule, MatPaginatorModule, MatMenuModule,
+    MatChipsModule, MatPaginatorModule, MatMenuModule, MatListModule, MatExpansionModule,
 
   ],
   exports: [RouterModule],

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { BackendService } from '../backend.service';
 
@@ -26,6 +27,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!environment.production) {
+      this.loginForm.controls['username'].setValue('1');
+      this.loginForm.controls['password'].setValue('Vasu123$');
+      this.submit();
+    }
   }
 
   public hasError = (controlName: string, errorName: string) => {
