@@ -1,0 +1,14 @@
+<mat-toolbar color="primary" fxLayout="row">
+  <img fxFlex="45px" src="assets/logo-old.png" alt="Xema">
+  <span fxFlex></span>
+  <app-logout-control fxFlex="250px"></app-logout-control>
+</mat-toolbar>
+
+<mat-drawer-container>
+  <mat-drawer mode="side" opened>
+    <app-left-menu></app-left-menu>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

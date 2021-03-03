@@ -1,0 +1,16 @@
+<div fxLayout="row" fxLayoutAlign="end center">
+
+  <span fxFlex></span>
+
+  <div fxFlex="32px"></div>
+
+  <div fxFlex="45px">
+    <button mat-icon-button [matMenuTriggerFor]="beforeMenu">
+      <div mat-card-avatar class="agent-image"></div>
+    </button>
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <button mat-menu-item (click)="logoff()">Logout</button>
+    </mat-menu>
+  </div>
+
+</div>

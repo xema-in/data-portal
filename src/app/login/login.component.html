@@ -1,0 +1,39 @@
+<form [formGroup]="loginForm" autocomplete="off" (ngSubmit)="submit()">
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar class="agent-image"></div>
+      <mat-card-title>Manager</mat-card-title>
+      <mat-card-subtitle>Welcome back</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div>
+        This is a business use computer system and is for authorized use only! Users of this computer system have no
+        explicit or implicit expectation of privacy. Any and all user activity, data files, and communications on this
+        system may be intercepted, monitored, recorded, copied, audited, inspected, and disclosed to local, state, or
+        federal law enforcement, administrators, and/or their authorized agents. By clicking SUBMIT the user agrees to
+        the above statement.
+      </div>
+
+      <mat-form-field>
+        <input matInput type="text" placeholder="User Id" formControlName="username" id="username">
+        <mat-error *ngIf="hasError('username', 'required')">User Name is required</mat-error>
+        <mat-error *ngIf="hasError('username', 'pattern')">Special characters are not allowed</mat-error>
+        <mat-error *ngIf="hasError('username', 'maxlength')">60 characters max.</mat-error>
+      </mat-form-field>
+
+      <br>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" formControlName="password" id="password">
+        <mat-error *ngIf="hasError('password', 'required')">Password is required</mat-error>
+        <mat-error *ngIf="hasError('password', 'maxlength')">Do you really remember this password?</mat-error>
+      </mat-form-field>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" [disabled]="!loginForm.valid">SUBMIT</button>
+      <a href="{{manager}}" target="_manager" mat-button color="secondary">MANAGE</a>
+    </mat-card-actions>
+  </mat-card>
+
+
+</form>
