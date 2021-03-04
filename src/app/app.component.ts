@@ -25,7 +25,7 @@ export class AppComponent {
         }
 
         case "LoggedIn": {
-          this.router.navigateByUrl("/");
+          this.router.navigateByUrl("/recordings/search");
           break;
         }
 

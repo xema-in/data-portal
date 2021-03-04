@@ -3,6 +3,7 @@ import { Rxios } from 'rxios';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AppState } from './interfaces/app-state';
+import { CallRecordParameters } from './interfaces/callrecord-parameters';
 import { Credentials } from './interfaces/credentials';
 
 @Injectable({
@@ -65,6 +66,14 @@ export class BackendService {
 
   public endcall(param: any) {
     return this.remote.post("/api/Call/HangupCall", param);
+  }
+
+  cdrslist(param) {
+    return this.remote.post(environment.backend + '/api/Cdrs', param);
+  }
+
+  getrecordedfile(param: CallRecordParameters) {
+    return this.remote.post(environment.backend + '/api/CallRecords', param);
   }
 
 

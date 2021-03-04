@@ -17,3 +17,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-image: url('assets/female-agent1.jpg');
   background-size: cover;
 }
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.full-width-table {
+  width: 100%;
+}

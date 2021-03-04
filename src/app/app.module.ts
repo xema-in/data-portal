@@ -24,7 +24,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatIconModule } from '@angular/material/icon';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
@@ -38,6 +38,7 @@ import { AppLayoutComponent } from './app-layout/app-layout.component';
 import { LeftMenuComponent } from './left-menu/left-menu.component';
 import { LogoutControlComponent } from './logout-control/logout-control.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SearchRecordingsComponent } from './search-recordings/search-recordings.component';
 
 const routes: Routes = [
 
@@ -47,7 +48,7 @@ const routes: Routes = [
     component: AppLayoutComponent,
     children: [
       { path: '', component: DashboardComponent, pathMatch: 'full' },
-      { path: 'recordings/search', component: DashboardComponent },
+      { path: 'recordings/search', component: SearchRecordingsComponent },
       { path: 'reports/cdr', component: DashboardComponent },
     ]
   },
@@ -73,7 +74,8 @@ const routes: Routes = [
     LoginLayoutComponent,
     DashboardComponent,
     LoginComponent,
-    ServerSelectionComponent
+    ServerSelectionComponent,
+    SearchRecordingsComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,9 @@ const routes: Routes = [
 
   ],
   exports: [RouterModule],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-IN' },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
