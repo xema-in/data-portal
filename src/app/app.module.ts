@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,6 +32,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppComponent } from './app.component';
+import { AuthInterceptor } from './auth.interceptor';
 import { LoginLayoutComponent } from './login-layout/login-layout.component';
 import { ServerSelectionComponent } from './server-selection/server-selection.component';
 import { LoginComponent } from './login/login.component';
@@ -39,6 +41,7 @@ import { LeftMenuComponent } from './left-menu/left-menu.component';
 import { LogoutControlComponent } from './logout-control/logout-control.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SearchRecordingsComponent } from './search-recordings/search-recordings.component';
+import { CdrReportComponent } from './cdr-report/cdr-report.component';
 
 const routes: Routes = [
 
@@ -49,7 +52,7 @@ const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent, pathMatch: 'full' },
       { path: 'recordings/search', component: SearchRecordingsComponent },
-      { path: 'reports/cdr', component: DashboardComponent },
+      { path: 'reports/cdr', component: CdrReportComponent },
     ]
   },
 
@@ -75,7 +78,8 @@ const routes: Routes = [
     DashboardComponent,
     LoginComponent,
     ServerSelectionComponent,
-    SearchRecordingsComponent
+    SearchRecordingsComponent,
+    CdrReportComponent
   ],
   imports: [
     BrowserModule,
@@ -83,6 +87,7 @@ const routes: Routes = [
     FlexLayoutModule,
     RouterModule.forRoot(routes, { useHash: true }),
     ReactiveFormsModule,
+    HttpClientModule,
 
     MatButtonModule, MatCardModule, MatDialogModule, MatTableModule, MatSortModule,
     MatInputModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule,
@@ -94,6 +99,7 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-IN' },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Rxios } from 'rxios';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AppState } from './interfaces/app-state';
@@ -11,10 +11,12 @@ import { Credentials } from './interfaces/credentials';
 })
 export class BackendService {
 
-  private remote: Rxios;
+  private baseUrl: string;
+  private token: string;
+
   public appState = new BehaviorSubject<AppState>({ state: 'Unknown' });
 
-  constructor() { }
+  constructor(private remote: HttpClient) { }
 
   setAppState(state: AppState): void {
     this.appState.next(state);
@@ -35,46 +37,37 @@ export class BackendService {
     localStorage.setItem('backend', url);
   }
 
-  ping(url: string) {
-    const remote = new Rxios({
-      baseURL: url,
-    });
-    return remote.get('/api/Setup/Ping');
+  ping(baseUrl: string) {
+    return this.remote.get(baseUrl + '/api/Setup/Ping');
   }
 
-  getAuthToken(url: string, credentials: Credentials) {
-    const remote = new Rxios({
-      baseURL: url,
-    });
-    return remote.post('/api/Account/LoginAgent2', credentials);
+  generateAuthToken(baseUrl: string, credentials: Credentials) {
+    return this.remote.post(baseUrl + '/api/Account/LoginAgent2', credentials);
   }
 
-  setupConnection(url: string, token: string) {
-    this.remote = new Rxios({
-      baseURL: url,
-      headers: {
-        common: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    });
+  setupConnection(baseUrl: string, token: string) {
+    this.baseUrl = baseUrl;
+    this.token = token;
+  }
+
+  getToken(): string {
+    return this.token;
   }
 
   disconnect() {
-    this.remote = null;
-  }
-
-  public endcall(param: any) {
-    return this.remote.post("/api/Call/HangupCall", param);
+    this.token = null;
   }
 
   cdrslist(param) {
-    return this.remote.post(environment.backend + '/api/Cdrs', param);
+    return this.remote.post(this.baseUrl + '/api/Cdrs', param);
   }
 
   getrecordedfile(param: CallRecordParameters) {
-    return this.remote.post(environment.backend + '/api/CallRecords/Download', param);
+    return this.remote.post(this.baseUrl + '/api/CallRecords/Download', param);
   }
 
+  cdrDownload(param: any) {
+    return this.remote.post(this.baseUrl + '/api/SimpleCdrReports/GetCdrs', param, { responseType: 'blob' });
+  }
 
 }

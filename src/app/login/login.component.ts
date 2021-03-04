@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
 
   submit() {
 
-    this.service.getAuthToken(this.manager, this.loginForm.value).subscribe(
+    this.service.generateAuthToken(this.manager, this.loginForm.value).subscribe(
       (data: any) => {
         this.service.setupConnection(this.manager, data.auth_token);
         this.service.setAppState({ state: 'LoggedIn' });
