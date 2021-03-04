@@ -67,7 +67,7 @@ export class BackendService {
   }
 
   cdrDownload(param: any) {
-    return this.remote.post(this.baseUrl + '/api/SimpleCdrReports/GetCdrs', param, { responseType: 'blob' });
+    return this.remote.post(this.baseUrl + '/api/SimpleCdrReports/GetFormattedReport', param, { responseType: 'blob' });
   }
 
 }

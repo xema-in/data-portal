@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { environment } from 'src/environments/environment';
 import { BackendService } from '../backend.service';
 import { saveAs } from 'file-saver';
 
@@ -11,6 +10,8 @@ import { saveAs } from 'file-saver';
 })
 export class CdrReportComponent implements OnInit {
 
+  busy = false;
+
   searchForm = this.fb.group({
     fromDate: [null, Validators.required],
     toDate: [null, Validators.required],
@@ -18,7 +19,7 @@ export class CdrReportComponent implements OnInit {
 
   constructor(private service: BackendService, private fb: FormBuilder) {
     let defaultFromDate = new Date();
-    if (!environment.production) defaultFromDate.setDate(defaultFromDate.getDate() - 10);
+    // if (!environment.production) defaultFromDate.setDate(defaultFromDate.getDate() - 10);
     defaultFromDate.setHours(0, 0, 0);
     this.searchForm.controls['fromDate'].setValue(defaultFromDate);
     this.searchForm.controls['toDate'].setValue(defaultFromDate);
@@ -27,19 +28,16 @@ export class CdrReportComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  fetchData(event: any) {
-    const button = event.target as HTMLButtonElement;
-    button.disabled = true;
+  fetchData() {
+    this.busy = true;
 
-    let fileName = '';
+    let fileName = 'cdr-' + new Date().valueOf() + '.csv';
 
-    // this.service
-    //   .cdrDownload(this.searchForm.value).subscribe((resp: any) => {
-    //     saveAs(resp, fileName);
-    //     setTimeout(function () {
-    //       button.disabled = false;
-    //     }, 30000);
-    //   });
+    this.service
+      .cdrDownload(this.searchForm.value).subscribe((resp: any) => {
+        saveAs(resp, fileName);
+        this.busy = false;
+      });
 
   }
 

@@ -21,8 +21,8 @@
           <mat-datepicker #to></mat-datepicker>
         </mat-form-field>
 
-        <button fxFlex="20" mat-flat-button color="primary" type="submit" (click)="fetchData($event)"
-          [disabled]="!searchForm.valid">Download</button>
+        <button fxFlex="20" mat-flat-button color="primary" type="submit" (click)="fetchData()"
+          [disabled]="!searchForm.valid || busy">Download</button>
       </small>
     </form>
   </mat-toolbar-row>
