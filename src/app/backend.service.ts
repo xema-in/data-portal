@@ -73,7 +73,7 @@ export class BackendService {
   }
 
   getrecordedfile(param: CallRecordParameters) {
-    return this.remote.post(environment.backend + '/api/CallRecords', param);
+    return this.remote.post(environment.backend + '/api/CallRecords/Download', param);
   }
 
 

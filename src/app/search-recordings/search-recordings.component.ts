@@ -5,8 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import { BackendService } from '../backend.service';
-import { QueryParameters } from '../interfaces/query-parameters';
 import { FormBuilder, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-search-recordings',
@@ -40,7 +40,7 @@ export class SearchRecordingsComponent implements OnInit {
 
   constructor(private service: BackendService, private fb: FormBuilder) {
     let defaultFromDate = new Date();
-    // defaultFromDate.setDate(defaultFromDate.getDate() - 10);
+    if (!environment.production) defaultFromDate.setDate(defaultFromDate.getDate() - 10);
     defaultFromDate.setHours(0, 0, 0);
     this.searchForm.controls['fromDate'].setValue(defaultFromDate);
   }
