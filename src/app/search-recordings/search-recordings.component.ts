@@ -26,7 +26,6 @@ export class SearchRecordingsComponent implements OnInit {
   });
 
   dataSource: any;
-  fileName: any;
 
   displayedColumns = [
     'originNumber',
@@ -35,7 +34,8 @@ export class SearchRecordingsComponent implements OnInit {
     'phoneId',
     'startTimestamp',
     'totalTime',
-    'recordingFileName',
+    'agentTime',
+    'recorded',
   ];
 
   constructor(private service: BackendService, private fb: FormBuilder) {
@@ -70,39 +70,24 @@ export class SearchRecordingsComponent implements OnInit {
     }
   }
 
-  downloadFile(fileName: string) {
-    this.fileName = fileName.split('/');
+  downloadFile(call: any) {
     this.service
-      .getrecordedfile({
-        filename: fileName,
-      })
+      .downloadfile(call.callId)
       .subscribe(
         (res: any) => {
-          var blob = this.base64ToBlob(res, 'text/plain');
-          saveAs(blob, this.fileName[this.fileName.length - 1]);
+          saveAs(res,
+            call.originNumber + '_'
+            + call.dialledNumber + '_'
+            + call.agentId + '_'
+            + call.phoneId + '_'
+            + call.startTimestamp
+            + '.wav');
         },
         (err) => {
           console.log(err);
           Swal.fire({ icon: 'error', title: 'Oops...', text: err.statusText });
         }
       );
-  }
-
-  base64ToBlob(b64Data, contentType = '', sliceSize = 512) {
-    b64Data = b64Data.replace(/\s/g, ''); //IE compatibility...
-    let byteCharacters = atob(b64Data);
-    let byteArrays = [];
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      let slice = byteCharacters.slice(offset, offset + sliceSize);
-
-      let byteNumbers = new Array(slice.length);
-      for (var i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-      let byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-    return new Blob(byteArrays, { type: contentType });
   }
 
 }

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AppState } from './interfaces/app-state';
-import { CallRecordParameters } from './interfaces/callrecord-parameters';
 import { Credentials } from './interfaces/credentials';
 
 @Injectable({
@@ -59,11 +58,15 @@ export class BackendService {
   }
 
   cdrslist(param) {
-    return this.remote.post(this.baseUrl + '/api/Cdrs', param);
+    return this.remote.post(this.baseUrl + '/api/SearchCallRecording', param);
   }
 
-  getrecordedfile(param: CallRecordParameters) {
-    return this.remote.post(this.baseUrl + '/api/CallRecords/Download', param);
+  downloadfile(callId) {
+    return this.remote.get(this.baseUrl + '/api/CallRecordingPlayBack/' + callId, { responseType: 'blob' });
+  }
+
+  getwavfile(callId) {
+    return this.remote.get(this.baseUrl + '/api/CallRecordingPlayBack/' + callId, { responseType: 'blob' });
   }
 
   cdrDownload(param: any) {

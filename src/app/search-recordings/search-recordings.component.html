@@ -80,14 +80,20 @@
       <td mat-cell *matCellDef="let row">{{row.totalTime}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="recordingFileName">
+    <ng-container matColumnDef="agentTime">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Agent Time</th>
+      <td mat-cell *matCellDef="let row">{{row.agentTime}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="recorded">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        Download
+        Recording
       </th>
       <td mat-cell *matCellDef="let row">
         <span *ngIf="row.recorded">
-          <mat-icon style="cursor: pointer;" (click)="downloadFile(row.recordingFileName)" matSuffix>file_download
-          </mat-icon>
+          <mat-icon style="cursor: pointer; margin-right: 24px;" (click)="downloadFile(row)" matSuffix>
+            file_download</mat-icon>
+          <mat-icon style="cursor: pointer;" (click)="downloadFile(row.callId)" matSuffix>play_arrow</mat-icon>
         </span>
       </td>
     </ng-container>
