@@ -7,6 +7,8 @@ import { saveAs } from 'file-saver';
 import { BackendService } from '../backend.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { RecordingsPlaybackDialogComponent } from '../recordings-playback-dialog/recordings-playback-dialog.component';
 
 @Component({
   selector: 'app-search-recordings',
@@ -38,7 +40,7 @@ export class SearchRecordingsComponent implements OnInit {
     'recorded',
   ];
 
-  constructor(private service: BackendService, private fb: FormBuilder) {
+  constructor(private service: BackendService, private fb: FormBuilder, public dialog: MatDialog) {
     let defaultFromDate = new Date();
     if (!environment.production) defaultFromDate.setDate(defaultFromDate.getDate() - 10);
     defaultFromDate.setHours(0, 0, 0);
@@ -81,13 +83,20 @@ export class SearchRecordingsComponent implements OnInit {
             + call.agentId + '_'
             + call.phoneId + '_'
             + call.startTimestamp
-            + '.wav');
+            + '.gsm');
         },
         (err) => {
           console.log(err);
           Swal.fire({ icon: 'error', title: 'Oops...', text: err.statusText });
         }
       );
+  }
+
+  playbackFile(call: any) {
+    const dialogRef = this.dialog.open(RecordingsPlaybackDialogComponent, {
+      width: '500px',
+      data: call,
+    });
   }
 
 }

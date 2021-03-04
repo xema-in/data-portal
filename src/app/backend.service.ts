@@ -62,7 +62,7 @@ export class BackendService {
   }
 
   downloadfile(callId) {
-    return this.remote.get(this.baseUrl + '/api/CallRecordingPlayBack/' + callId, { responseType: 'blob' });
+    return this.remote.get(this.baseUrl + '/api/DownloadCallRecording/' + callId, { responseType: 'blob' });
   }
 
   getwavfile(callId) {

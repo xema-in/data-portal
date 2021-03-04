@@ -93,7 +93,7 @@
         <span *ngIf="row.recorded">
           <mat-icon style="cursor: pointer; margin-right: 24px;" (click)="downloadFile(row)" matSuffix>
             file_download</mat-icon>
-          <mat-icon style="cursor: pointer;" (click)="downloadFile(row.callId)" matSuffix>play_arrow</mat-icon>
+          <mat-icon style="cursor: pointer;" (click)="playbackFile(row)" matSuffix>play_arrow</mat-icon>
         </span>
       </td>
     </ng-container>

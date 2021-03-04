@@ -1,0 +1,19 @@
+<table mat-table [ngClass]="{'full-width-table': true}" [dataSource]="values">
+  <ng-container matColumnDef="name">
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+  <ng-container matColumnDef="value">
+    <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+  </ng-container>
+  <tr mat-row *matRowDef="let row; columns: ['name', 'value'];"></tr>
+</table>
+
+<div>
+  <div style="margin: 32px;"></div>
+
+  <ngx-audio-player [playlist]="playlist" [autoPlay]="true" [displayTitle]="false" [displayPlaylist]="false"
+    [expanded]="false" [displayVolumeControls]="true" [displayRepeatControls]="false" [displayArtist]="true"
+    [displayDuration]="false" [disablePositionSlider]="true" muted="muted" (trackEnded)="onEnded($event)">
+  </ngx-audio-player>
+
+</div>
