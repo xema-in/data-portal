@@ -7,6 +7,8 @@ import { saveAs } from 'file-saver';
 import { BackendService } from '../backend.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { RecordingsPlaybackDialogComponent } from '../recordings-playback-dialog/recordings-playback-dialog.component';
 
 @Component({
   selector: 'app-search-recordings',
@@ -26,7 +28,6 @@ export class SearchRecordingsComponent implements OnInit {
   });
 
   dataSource: any;
-  fileName: any;
 
   displayedColumns = [
     'originNumber',
@@ -35,10 +36,11 @@ export class SearchRecordingsComponent implements OnInit {
     'phoneId',
     'startTimestamp',
     'totalTime',
-    'recordingFileName',
+    'agentTime',
+    'recorded',
   ];
 
-  constructor(private service: BackendService, private fb: FormBuilder) {
+  constructor(private service: BackendService, private fb: FormBuilder, public dialog: MatDialog) {
     let defaultFromDate = new Date();
     if (!environment.production) defaultFromDate.setDate(defaultFromDate.getDate() - 10);
     defaultFromDate.setHours(0, 0, 0);
@@ -70,16 +72,18 @@ export class SearchRecordingsComponent implements OnInit {
     }
   }
 
-  downloadFile(fileName: string) {
-    this.fileName = fileName.split('/');
+  downloadFile(call: any) {
     this.service
-      .getrecordedfile({
-        filename: fileName,
-      })
+      .downloadfile(call.callId)
       .subscribe(
         (res: any) => {
-          var blob = this.base64ToBlob(res, 'text/plain');
-          saveAs(blob, this.fileName[this.fileName.length - 1]);
+          saveAs(res,
+            call.originNumber + '_'
+            + call.dialledNumber + '_'
+            + call.agentId + '_'
+            + call.phoneId + '_'
+            + call.startTimestamp
+            + '.gsm');
         },
         (err) => {
           console.log(err);
@@ -88,21 +92,11 @@ export class SearchRecordingsComponent implements OnInit {
       );
   }
 
-  base64ToBlob(b64Data, contentType = '', sliceSize = 512) {
-    b64Data = b64Data.replace(/\s/g, ''); //IE compatibility...
-    let byteCharacters = atob(b64Data);
-    let byteArrays = [];
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      let slice = byteCharacters.slice(offset, offset + sliceSize);
-
-      let byteNumbers = new Array(slice.length);
-      for (var i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-      let byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-    return new Blob(byteArrays, { type: contentType });
+  playbackFile(call: any) {
+    const dialogRef = this.dialog.open(RecordingsPlaybackDialogComponent, {
+      width: '500px',
+      data: call,
+    });
   }
 
 }

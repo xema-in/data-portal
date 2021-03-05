@@ -31,6 +31,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 
+import { NgxAudioPlayerModule } from 'ngx-audio-player';
+
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { LoginLayoutComponent } from './login-layout/login-layout.component';
@@ -42,6 +44,7 @@ import { LogoutControlComponent } from './logout-control/logout-control.componen
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SearchRecordingsComponent } from './search-recordings/search-recordings.component';
 import { CdrReportComponent } from './cdr-report/cdr-report.component';
+import { RecordingsPlaybackDialogComponent } from './recordings-playback-dialog/recordings-playback-dialog.component';
 
 const routes: Routes = [
 
@@ -79,7 +82,8 @@ const routes: Routes = [
     LoginComponent,
     ServerSelectionComponent,
     SearchRecordingsComponent,
-    CdrReportComponent
+    CdrReportComponent,
+    RecordingsPlaybackDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -95,8 +99,13 @@ const routes: Routes = [
     MatToolbarModule, MatDividerModule, MatGridListModule, MatSelectModule, MatProgressBarModule,
     MatChipsModule, MatPaginatorModule, MatMenuModule, MatListModule, MatExpansionModule,
 
+    NgxAudioPlayerModule,
+
   ],
   exports: [RouterModule],
+  entryComponents: [
+    RecordingsPlaybackDialogComponent
+  ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-IN' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
