@@ -8,12 +8,11 @@
   <tr mat-row *matRowDef="let row; columns: ['name', 'value'];"></tr>
 </table>
 
-<div>
-  <div style="margin: 32px;"></div>
+<div style="margin: 32px;"></div>
 
-  <ngx-audio-player [playlist]="playlist" [autoPlay]="true" [displayTitle]="false" [displayPlaylist]="false"
-    [expanded]="false" [displayVolumeControls]="true" [displayRepeatControls]="false" [displayArtist]="true"
-    [displayDuration]="false" [disablePositionSlider]="true" muted="muted" (trackEnded)="onEnded($event)">
-  </ngx-audio-player>
+<ngx-audio-player [playlist]="playlist" [autoPlay]="true" [displayTitle]="false" [displayPlaylist]="false"
+  [expanded]="false" [displayVolumeControls]="true" [displayRepeatControls]="false" [displayArtist]="false"
+  [displayDuration]="false" [disablePositionSlider]="false" muted="muted" (trackEnded)="onEnded($event)">
+</ngx-audio-player>
 
-</div>
+<span *ngIf="!hasFile">Downloading audio ...</span>

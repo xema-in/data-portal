@@ -2,6 +2,7 @@ import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/co
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AudioPlayerComponent, Track } from 'ngx-audio-player';
+import { AudioPlayerService } from 'ngx-audio-player/lib/service/audio-player-service/audio-player.service';
 import Swal from 'sweetalert2';
 import { BackendService } from '../backend.service';
 
@@ -13,9 +14,13 @@ import { BackendService } from '../backend.service';
 export class RecordingsPlaybackDialogComponent implements OnInit, AfterViewInit {
   @ViewChild(AudioPlayerComponent, { static: false }) player: AudioPlayerComponent;
 
-  hasFile = false;
-  playlist: Track[] = [];
   values = [];
+
+  hasFile = false;
+  playlist: Track[] = [{
+    link: '',
+    title: 'Call Audio',
+  }];
 
   constructor(
     public dialogRef: MatDialogRef<RecordingsPlaybackDialogComponent>,
@@ -29,20 +34,24 @@ export class RecordingsPlaybackDialogComponent implements OnInit, AfterViewInit 
       { name: 'Agent Id', value: data?.agentId },
       { name: 'Phone Id', value: data?.phoneId },
     ];
+
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+    this.player.repeat = 'none';
+
     this.service
       .getwavfile(this.data.callId)
       .subscribe(
         (res: any) => {
           let link: any = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(res));
-          this.playlist.push({
-            title: 'Call Audio',
+          this.player.audioPlayerService.setPlaylist([{
             link: link,
-            artist: 'Xema Platform',
-            duration: this.data.agentTime,
-          });
+            title: 'Call Audio',
+          }])
           this.hasFile = true;
         },
         (err) => {
@@ -51,10 +60,6 @@ export class RecordingsPlaybackDialogComponent implements OnInit, AfterViewInit 
         }
       );
 
-  }
-
-  ngAfterViewInit(): void {
-    this.player.repeat = 'none';
   }
 
   onEnded(event) {
