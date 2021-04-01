@@ -96,6 +96,7 @@ export class SearchRecordingsComponent implements OnInit {
     const dialogRef = this.dialog.open(RecordingsPlaybackDialogComponent, {
       width: '500px',
       data: call,
+      panelClass: 'my-dialog',
     });
   }
 
