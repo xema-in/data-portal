@@ -45,6 +45,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SearchRecordingsComponent } from './search-recordings/search-recordings.component';
 import { CdrReportComponent } from './cdr-report/cdr-report.component';
 import { RecordingsPlaybackDialogComponent } from './recordings-playback-dialog/recordings-playback-dialog.component';
+import { DatasetsListComponent } from './datasets-list/datasets-list.component';
+import { ExploreDatasetComponent } from './explore-dataset/explore-dataset.component';
 import { MissedcallReportComponent } from './missedcall-report/missedcall-report.component';
 
 const routes: Routes = [
@@ -87,7 +89,9 @@ const routes: Routes = [
     SearchRecordingsComponent,
     CdrReportComponent,
     RecordingsPlaybackDialogComponent,
-    MissedcallReportComponent
+    DatasetsListComponent,
+    ExploreDatasetComponent,
+    MissedcallReportComponent,
   ],
   imports: [
     BrowserModule,
