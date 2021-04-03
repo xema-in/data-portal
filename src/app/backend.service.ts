@@ -73,4 +73,8 @@ export class BackendService {
     return this.remote.post(this.baseUrl + '/api/SimpleCdrReports/GetFormattedReport', param, { responseType: 'blob' });
   }
 
+  missedcallsDownload(param: any) {
+    return this.remote.post(this.baseUrl + '/api/MissedCallReport', param);
+  }
+
 }

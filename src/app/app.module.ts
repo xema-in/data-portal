@@ -47,6 +47,7 @@ import { CdrReportComponent } from './cdr-report/cdr-report.component';
 import { RecordingsPlaybackDialogComponent } from './recordings-playback-dialog/recordings-playback-dialog.component';
 import { DatasetsListComponent } from './datasets-list/datasets-list.component';
 import { ExploreDatasetComponent } from './explore-dataset/explore-dataset.component';
+import { MissedcallReportComponent } from './missedcall-report/missedcall-report.component';
 
 const routes: Routes = [
 
@@ -58,6 +59,8 @@ const routes: Routes = [
       { path: '', component: DashboardComponent, pathMatch: 'full' },
       { path: 'recordings/search', component: SearchRecordingsComponent },
       { path: 'reports/cdr', component: CdrReportComponent },
+      { path: 'reports/missedcalls', component: MissedcallReportComponent },
+
     ]
   },
 
@@ -87,7 +90,8 @@ const routes: Routes = [
     CdrReportComponent,
     RecordingsPlaybackDialogComponent,
     DatasetsListComponent,
-    ExploreDatasetComponent
+    ExploreDatasetComponent,
+    MissedcallReportComponent,
   ],
   imports: [
     BrowserModule,

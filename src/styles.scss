@@ -25,3 +25,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .full-width-table {
   width: 100%;
 }
+
+
+.cdk-overlay-pane.my-dialog {
+  position: relative!important;
+}
+.close.mat-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20px;
+  line-height: 14px;
+  min-width: auto;
+}
+
+.excel{
+    padding-top: 10px !important;
+    margin-left: -5px im !important;
+}
