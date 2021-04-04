@@ -48,6 +48,7 @@ import { RecordingsPlaybackDialogComponent } from './recordings-playback-dialog/
 import { DatasetsListComponent } from './datasets-list/datasets-list.component';
 import { ExploreDatasetComponent } from './explore-dataset/explore-dataset.component';
 import { MissedcallReportComponent } from './missedcall-report/missedcall-report.component';
+import { GeneralReportComponent } from './general-report/general-report.component';
 
 const routes: Routes = [
 
@@ -60,7 +61,7 @@ const routes: Routes = [
       { path: 'recordings/search', component: SearchRecordingsComponent },
       { path: 'reports/cdr', component: CdrReportComponent },
       { path: 'reports/missedcalls', component: MissedcallReportComponent },
-
+      { path: 'general/:groupId/:reportId', component: GeneralReportComponent },
     ]
   },
 
@@ -92,6 +93,7 @@ const routes: Routes = [
     DatasetsListComponent,
     ExploreDatasetComponent,
     MissedcallReportComponent,
+    GeneralReportComponent,
   ],
   imports: [
     BrowserModule,

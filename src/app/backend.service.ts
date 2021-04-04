@@ -57,6 +57,14 @@ export class BackendService {
     this.token = null;
   }
 
+  getReportGroups() {
+    return this.remote.get(this.baseUrl + '/api/Reports/ReportGroups');
+  }
+
+  getEnabledReports() {
+    return this.remote.get(this.baseUrl + '/api/Reports/Reports');
+  }
+
   cdrslist(param) {
     return this.remote.post(this.baseUrl + '/api/SearchCallRecording', param);
   }

@@ -1,5 +1,19 @@
 <mat-accordion>
 
+  <span *ngFor="let group of groups">
+    <mat-expansion-panel [expanded]="group.id==1" *ngIf="groupHasReports(group.id)">
+      <mat-expansion-panel-header>
+        <mat-panel-title> {{group.name}} </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-nav-list *ngFor="let report of getFilteredReports(group.id)">
+        <a mat-list-item routerLink="/{{report.template}}/{{group.id}}/{{report.id}}"
+          routerLinkActive="active-link">{{report.name}}</a>
+      </mat-nav-list>
+    </mat-expansion-panel>
+  </span>
+
+
+
   <mat-expansion-panel expanded>
     <mat-expansion-panel-header>
       <mat-panel-title> Call Recordings </mat-panel-title>
