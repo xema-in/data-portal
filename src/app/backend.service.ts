@@ -65,6 +65,14 @@ export class BackendService {
     return this.remote.get(this.baseUrl + '/api/Reports/Reports');
   }
 
+  getReportConfig(id) {
+    return this.remote.get(this.baseUrl + '/api/Reports/ReportConfig/' + id);
+  }
+
+  getReport(id: number, params: any) {
+    return this.remote.post(this.baseUrl + '/api/Reports/Report/' + id, params);
+  }
+
   cdrslist(param) {
     return this.remote.post(this.baseUrl + '/api/SearchCallRecording', param);
   }
