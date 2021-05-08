@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BackendService } from '../backend.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-general-report',
@@ -35,11 +36,12 @@ export class GeneralReportComponent implements OnInit {
   permissions: { scope: string, name: string }[] = [];
 
   dataSource: any;
+  displayedColumns = [];
 
   constructor(private route: ActivatedRoute, private service: BackendService) {
     this.route.params.subscribe(params => {
-      this.groupId = params['groupId'];
-      this.reportId = params['reportId'];
+      this.groupId = params.groupId;
+      this.reportId = params.reportId;
     });
   }
 
@@ -48,7 +50,7 @@ export class GeneralReportComponent implements OnInit {
       this.reportConfig = config;
 
       // process filter options
-      const filterOptions: string[] = this.reportConfig.filterOptions?.toUpperCase().split(";");
+      const filterOptions: string[] = this.reportConfig.filterOptions?.toUpperCase().split(';');
 
       if (filterOptions.lastIndexOf('AGENT-ID') >= 0) {
         this.searchForm.addControl('agentId', new FormControl(''));
@@ -71,24 +73,22 @@ export class GeneralReportComponent implements OnInit {
       }
 
       // evaluate permissions
-      const perms: string[] = this.reportConfig.permissions?.split(";");
+      const perms: string[] = this.reportConfig.permissions?.split(';');
       perms.forEach((perm) => {
-        const parts: string[] = perm.split(":");
+        const parts: string[] = perm.split(':');
         if (parts.length === 2) {
           let scope: string;
-          if (parts[0].toUpperCase() === "OWNER") { scope = 'owner'; }
-          else if (parts[0].toUpperCase() === "USER") { scope = 'user'; }
-          else if (parts[0].toUpperCase() === "GROUP") { scope = 'group'; }
-          this.permissions.push({ scope: scope, name: parts[1] });
+          if (parts[0].toUpperCase() === 'OWNER') { scope = 'owner'; }
+          else if (parts[0].toUpperCase() === 'USER') { scope = 'user'; }
+          else if (parts[0].toUpperCase() === 'ROLE') { scope = 'group'; }
+          this.permissions.push({ scope, name: parts[1] });
         }
       });
-
-      console.log(this.permissions);
 
     });
   }
 
-  applyFilter(event: any) {
+  applyFilter(event: any): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
@@ -96,11 +96,16 @@ export class GeneralReportComponent implements OnInit {
     }
   }
 
-  fetchData() {
-
+  fetchData(): void {
+    this.service.getJsonReport(this.reportId, this.searchForm.value).subscribe((resp: any[]) => {
+      this.dataSource = new MatTableDataSource(resp);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.displayedColumns = Object.keys(resp[0]);
+    });
   }
 
-  ExportTOExcel() {
+  exportToExcel(): void {
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(this.table.nativeElement);
     XLSX.utils.book_append_sheet(wb, ws, this.reportConfig.name);
