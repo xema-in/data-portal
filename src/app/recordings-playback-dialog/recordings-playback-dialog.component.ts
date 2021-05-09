@@ -48,14 +48,14 @@ export class RecordingsPlaybackDialogComponent implements OnInit, AfterViewInit 
     this.player.repeat = 'none';
 
     this.service
-      .getwavfile(this.data.callId)
+      .getPlaybackWavFile(this.data.reportId, this.data.callId)
       .subscribe(
         (res: any) => {
-          let link: any = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(res));
+          const link: any = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(res));
           this.player.audioPlayerService.setPlaylist([{
-            link: link,
+            link,
             title: 'Call Audio',
-          }])
+          }]);
           this.hasFile = true;
         },
         (err) => {
@@ -66,7 +66,7 @@ export class RecordingsPlaybackDialogComponent implements OnInit, AfterViewInit 
 
   }
 
-  onEnded(event) {
+  onEnded(event): void {
   }
 
   onClose(): void {

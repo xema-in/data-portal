@@ -49,8 +49,20 @@ import { DatasetsListComponent } from './datasets-list/datasets-list.component';
 import { ExploreDatasetComponent } from './explore-dataset/explore-dataset.component';
 import { MissedcallReportComponent } from './missedcall-report/missedcall-report.component';
 import { GenericReportComponent } from './generic-report/generic-report.component';
+import { PageNotfoundComponent } from './page-notfound/page-notfound.component';
+import { CallRecordingsComponent } from './call-recordings/call-recordings.component';
 
 const routes: Routes = [
+
+  // login, forgot password pages
+  {
+    path: '',
+    component: LoginLayoutComponent,
+    children: [
+      { path: 'server', component: ServerSelectionComponent },
+      { path: 'login', component: LoginComponent },
+    ]
+  },
 
   // application pages
   {
@@ -61,18 +73,10 @@ const routes: Routes = [
       { path: 'recordings/search', component: SearchRecordingsComponent },
       { path: 'reports/cdr', component: CdrReportComponent },
       { path: 'reports/missedcalls', component: MissedcallReportComponent },
+      { path: 'recordings/:groupId/:reportId', component: CallRecordingsComponent },
       { path: 'generic/:groupId/:reportId', component: GenericReportComponent },
       { path: ':groupId/:reportId', component: GenericReportComponent }, // keep at the end of reports
-    ]
-  },
-
-  // login, forgot password pages
-  {
-    path: '',
-    component: LoginLayoutComponent,
-    children: [
-      { path: 'server', component: ServerSelectionComponent },
-      { path: 'login', component: LoginComponent },
+      { path: '**', component: PageNotfoundComponent },
     ]
   },
 
@@ -95,6 +99,8 @@ const routes: Routes = [
     ExploreDatasetComponent,
     MissedcallReportComponent,
     GenericReportComponent,
+    PageNotfoundComponent,
+    CallRecordingsComponent,
   ],
   imports: [
     BrowserModule,

@@ -78,6 +78,15 @@ export class BackendService {
     return this.remote.post(this.baseUrl + '/api/Reports/JsonReport/' + id, params);
   }
 
+  downloadCallRecording(reportId, callId): Observable<any> {
+    return this.remote.get(this.baseUrl + '/api/Reports/DownloadCallRecording/' + reportId + '/' + callId, { responseType: 'blob' });
+  }
+
+  getPlaybackWavFile(reportId, callId): Observable<any> {
+    return this.remote.get(this.baseUrl + '/api/Reports/CallRecordingPlayBack/' + reportId + '/' + callId, { responseType: 'blob' });
+  }
+
+
   cdrslist(param: any): Observable<any> {
     return this.remote.post(this.baseUrl + '/api/SearchCallRecording', param);
   }
