@@ -8,11 +8,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-general-report',
-  templateUrl: './general-report.component.html',
-  styleUrls: ['./general-report.component.scss']
+  selector: 'app-generic-report',
+  templateUrl: './generic-report.component.html',
+  styleUrls: ['./generic-report.component.scss']
 })
-export class GeneralReportComponent implements OnInit {
+export class GenericReportComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -47,6 +47,8 @@ export class GeneralReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('generic-report');
+
     this.service.getReportConfig(this.reportId).subscribe((config) => {
       this.reportConfig = config;
 

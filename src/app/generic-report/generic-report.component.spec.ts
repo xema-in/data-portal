@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GeneralReportComponent } from './general-report.component';
+import { GenericReportComponent } from './generic-report.component';
 
-describe('GeneralReportComponent', () => {
-  let component: GeneralReportComponent;
-  let fixture: ComponentFixture<GeneralReportComponent>;
+describe('GenericReportComponent', () => {
+  let component: GenericReportComponent;
+  let fixture: ComponentFixture<GenericReportComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GeneralReportComponent ]
+      declarations: [ GenericReportComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GeneralReportComponent);
+    fixture = TestBed.createComponent(GenericReportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
