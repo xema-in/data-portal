@@ -22,6 +22,7 @@ export class GeneralReportComponent implements OnInit {
   reportId: number;
 
   reportConfig: any = {};
+  columnAltNames: any = {};
 
   searchForm = new FormGroup({});
 
@@ -101,7 +102,26 @@ export class GeneralReportComponent implements OnInit {
       this.dataSource = new MatTableDataSource(resp);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      this.displayedColumns = Object.keys(resp[0]);
+
+      if (resp.length > 0) {
+        this.displayedColumns = Object.keys(resp[0]);
+
+        // read column alt names
+        Object.keys(resp[0]).forEach((colName) => {
+          this.columnAltNames[colName] = colName.toUpperCase();
+        });
+
+        const columnAltNames: string[] = this.reportConfig.columnAltNames?.split(';');
+        if (columnAltNames !== undefined) {
+          columnAltNames.forEach((altName) => {
+            const parts: string[] = altName.split(':');
+            if (parts.length === 2) {
+              this.columnAltNames[parts[0]] = parts[1];
+            }
+          });
+        }
+      }
+
     });
   }
 
