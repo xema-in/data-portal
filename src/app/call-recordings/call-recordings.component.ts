@@ -16,7 +16,7 @@ import { RecordingsPlaybackDialogComponent } from '../recordings-playback-dialog
   templateUrl: './call-recordings.component.html',
   styleUrls: ['./call-recordings.component.scss']
 })
-export class CallRecordingsComponent implements OnInit {
+export class CallRecordingsComponent {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -49,57 +49,57 @@ export class CallRecordingsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.groupId = params.groupId;
       this.reportId = params.reportId;
-    });
-  }
 
-  ngOnInit(): void {
-    this.service.getReportConfig(this.reportId).subscribe((config) => {
-      this.reportConfig = config;
+      this.service.getReportConfig(this.reportId).subscribe((config) => {
+        this.reportConfig = config;
 
-      // process filter options
-      const filterOptions: string[] = this.reportConfig.filterOptions?.toUpperCase().split(';');
+        // process filter options
+        const filterOptions: string[] = this.reportConfig.filterOptions?.toUpperCase().split(';');
 
-      if (filterOptions.lastIndexOf('AGENT-ID') >= 0) {
-        this.searchForm.addControl('agentId', new FormControl(''));
-        this.enabledFilterControls.agentId = this.enabledFilterControls.search = true;
-      }
-
-      if (filterOptions.lastIndexOf('PHONE-ID') >= 0) {
-        this.searchForm.addControl('phoneId', new FormControl(''));
-        this.enabledFilterControls.phoneId = this.enabledFilterControls.search = true;
-      }
-
-      if (filterOptions.lastIndexOf('ANI') >= 0) {
-        this.searchForm.addControl('ani', new FormControl(''));
-        this.enabledFilterControls.ani = this.enabledFilterControls.search = true;
-      }
-
-      if (filterOptions.lastIndexOf('DNI') >= 0) {
-        this.searchForm.addControl('dni', new FormControl(''));
-        this.enabledFilterControls.dni = this.enabledFilterControls.search = true;
-      }
-
-      if (filterOptions.lastIndexOf('FROM-DATE') >= 0) {
-        this.searchForm.addControl('fromDate', new FormControl('', Validators.required));
-        this.enabledFilterControls.fromDate = this.enabledFilterControls.search = true;
-      }
-
-      if (filterOptions.lastIndexOf('TO-DATE') >= 0) {
-        this.searchForm.addControl('toDate', new FormControl('', Validators.required));
-        this.enabledFilterControls.toDate = this.enabledFilterControls.search = true;
-      }
-
-      // evaluate permissions
-      const perms: string[] = this.reportConfig.permissions?.split(';');
-      perms.forEach((perm) => {
-        const parts: string[] = perm.split(':');
-        if (parts.length === 2) {
-          let scope: string;
-          if (parts[0].toUpperCase() === 'OWNER') { scope = 'owner'; }
-          else if (parts[0].toUpperCase() === 'USER') { scope = 'user'; }
-          else if (parts[0].toUpperCase() === 'ROLE') { scope = 'group'; }
-          this.permissions.push({ scope, name: parts[1] });
+        if (filterOptions.lastIndexOf('AGENT-ID') >= 0) {
+          this.searchForm.addControl('agentId', new FormControl(''));
+          this.enabledFilterControls.agentId = this.enabledFilterControls.search = true;
         }
+
+        if (filterOptions.lastIndexOf('PHONE-ID') >= 0) {
+          this.searchForm.addControl('phoneId', new FormControl(''));
+          this.enabledFilterControls.phoneId = this.enabledFilterControls.search = true;
+        }
+
+        if (filterOptions.lastIndexOf('ANI') >= 0) {
+          this.searchForm.addControl('ani', new FormControl(''));
+          this.enabledFilterControls.ani = this.enabledFilterControls.search = true;
+        }
+
+        if (filterOptions.lastIndexOf('DNI') >= 0) {
+          this.searchForm.addControl('dni', new FormControl(''));
+          this.enabledFilterControls.dni = this.enabledFilterControls.search = true;
+        }
+
+        if (filterOptions.lastIndexOf('FROM-DATE') >= 0) {
+          this.searchForm.addControl('fromDate', new FormControl('', Validators.required));
+          this.enabledFilterControls.fromDate = this.enabledFilterControls.search = true;
+        }
+
+        if (filterOptions.lastIndexOf('TO-DATE') >= 0) {
+          this.searchForm.addControl('toDate', new FormControl('', Validators.required));
+          this.enabledFilterControls.toDate = this.enabledFilterControls.search = true;
+        }
+
+        // evaluate permissions
+        this.permissions = [];
+        const perms: string[] = this.reportConfig.permissions?.split(';');
+        perms.forEach((perm) => {
+          const parts: string[] = perm.split(':');
+          if (parts.length === 2) {
+            let scope: string;
+            if (parts[0].toUpperCase() === 'OWNER') { scope = 'owner'; }
+            else if (parts[0].toUpperCase() === 'USER') { scope = 'user'; }
+            else if (parts[0].toUpperCase() === 'ROLE') { scope = 'group'; }
+            this.permissions.push({ scope, name: parts[1] });
+          }
+        });
+
       });
 
     });

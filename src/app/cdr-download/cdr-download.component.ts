@@ -1,5 +1,5 @@
 import { saveAs } from 'file-saver';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BackendService } from '../backend.service';
@@ -9,7 +9,7 @@ import { BackendService } from '../backend.service';
   templateUrl: './cdr-download.component.html',
   styleUrls: ['./cdr-download.component.scss']
 })
-export class CdrDownloadComponent implements OnInit {
+export class CdrDownloadComponent {
 
   groupId: number;
   reportId: number;
@@ -27,25 +27,24 @@ export class CdrDownloadComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.groupId = params.groupId;
       this.reportId = params.reportId;
-    });
-  }
 
-  ngOnInit(): void {
-    this.service.getReportConfig(this.reportId).subscribe((config) => {
-      this.reportConfig = config;
+      this.service.getReportConfig(this.reportId).subscribe((config) => {
+        this.reportConfig = config;
 
+        // evaluate permissions
+        this.permissions = [];
+        const perms: string[] = this.reportConfig.permissions?.split(';');
+        perms.forEach((perm) => {
+          const parts: string[] = perm.split(':');
+          if (parts.length === 2) {
+            let scope: string;
+            if (parts[0].toUpperCase() === 'OWNER') { scope = 'owner'; }
+            else if (parts[0].toUpperCase() === 'USER') { scope = 'user'; }
+            else if (parts[0].toUpperCase() === 'ROLE') { scope = 'group'; }
+            this.permissions.push({ scope, name: parts[1] });
+          }
+        });
 
-      // evaluate permissions
-      const perms: string[] = this.reportConfig.permissions?.split(';');
-      perms.forEach((perm) => {
-        const parts: string[] = perm.split(':');
-        if (parts.length === 2) {
-          let scope: string;
-          if (parts[0].toUpperCase() === 'OWNER') { scope = 'owner'; }
-          else if (parts[0].toUpperCase() === 'USER') { scope = 'user'; }
-          else if (parts[0].toUpperCase() === 'ROLE') { scope = 'group'; }
-          this.permissions.push({ scope, name: parts[1] });
-        }
       });
 
     });
