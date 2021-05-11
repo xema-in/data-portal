@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AppState } from './interfaces/app-state';
 import { Credentials } from './interfaces/credentials';
@@ -23,28 +23,33 @@ export class BackendService {
 
   getBackendUrl(): string | null {
     {
-      let url = environment.backend;
-      if (url !== null && url !== undefined && url !== '') return url;
-    } {
-      let url = localStorage.getItem('backend');
-      if (url !== null && url !== undefined && url !== '') return url;
+      const url = environment.backend;
+      if (url !== null && url !== undefined && url !== '') {
+        return url;
+      }
+    }
+    {
+      const url = localStorage.getItem('backend');
+      if (url !== null && url !== undefined && url !== '') {
+        return url;
+      }
     }
     return null;
   }
 
-  saveBackendUrl(url: string) {
+  saveBackendUrl(url: string): void {
     localStorage.setItem('backend', url);
   }
 
-  ping(baseUrl: string) {
+  ping(baseUrl: string): Observable<any> {
     return this.remote.get(baseUrl + '/api/Setup/Ping');
   }
 
-  generateAuthToken(baseUrl: string, credentials: Credentials) {
+  generateAuthToken(baseUrl: string, credentials: Credentials): Observable<any> {
     return this.remote.post(baseUrl + '/api/Account/LoginAgent2', credentials);
   }
 
-  setupConnection(baseUrl: string, token: string) {
+  setupConnection(baseUrl: string, token: string): void {
     this.baseUrl = baseUrl;
     this.token = token;
   }
@@ -53,27 +58,61 @@ export class BackendService {
     return this.token;
   }
 
-  disconnect() {
+  disconnect(): void {
     this.token = null;
   }
 
-  cdrslist(param) {
+  getReportGroups(): Observable<any> {
+    return this.remote.get(this.baseUrl + '/api/Reports/ReportGroups');
+  }
+
+  getEnabledReports(): Observable<any> {
+    return this.remote.get(this.baseUrl + '/api/Reports/Reports');
+  }
+
+  getReportConfig(id: number): Observable<any> {
+    return this.remote.get(this.baseUrl + '/api/Reports/ReportConfig/' + id);
+  }
+
+  getJsonReport(id: number, params: any): Observable<any> {
+    return this.remote.post(this.baseUrl + '/api/Reports/JsonReport/' + id, params);
+  }
+
+  getCsvReport(reportId, param: any): Observable<any> {
+    return this.remote.post(this.baseUrl + '/api/Reports/CsvReport/' + reportId, param, { responseType: 'blob' });
+  }
+
+  downloadCallRecording(reportId, callId): Observable<any> {
+    return this.remote.get(this.baseUrl + '/api/Reports/DownloadCallRecording/' + reportId + '/' + callId, { responseType: 'blob' });
+  }
+
+  getPlaybackWavFile(reportId, callId): Observable<any> {
+    return this.remote.get(this.baseUrl + '/api/Reports/CallRecordingPlayBack/' + reportId + '/' + callId, { responseType: 'blob' });
+  }
+
+  downloadCdr(reportId, param: any): Observable<any> {
+    return this.remote.post(this.baseUrl + '/api/Reports/CdrDownload2/' + reportId, param, { responseType: 'blob' });
+  }
+
+
+
+  cdrslist(param: any): Observable<any> {
     return this.remote.post(this.baseUrl + '/api/SearchCallRecording', param);
   }
 
-  downloadfile(callId) {
+  downloadfile(callId): Observable<any> {
     return this.remote.get(this.baseUrl + '/api/DownloadCallRecording/' + callId, { responseType: 'blob' });
   }
 
-  getwavfile(callId) {
+  getwavfile(callId): Observable<any> {
     return this.remote.get(this.baseUrl + '/api/CallRecordingPlayBack/' + callId, { responseType: 'blob' });
   }
 
-  cdrDownload(param: any) {
+  cdrDownload(param: any): Observable<any> {
     return this.remote.post(this.baseUrl + '/api/SimpleCdrReports/GetFormattedReport', param, { responseType: 'blob' });
   }
 
-  missedcallsDownload(param: any) {
+  missedcallsDownload(param: any): Observable<any> {
     return this.remote.post(this.baseUrl + '/api/MissedCallReport', param);
   }
 

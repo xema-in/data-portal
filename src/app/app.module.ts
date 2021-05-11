@@ -48,8 +48,23 @@ import { RecordingsPlaybackDialogComponent } from './recordings-playback-dialog/
 import { DatasetsListComponent } from './datasets-list/datasets-list.component';
 import { ExploreDatasetComponent } from './explore-dataset/explore-dataset.component';
 import { MissedcallReportComponent } from './missedcall-report/missedcall-report.component';
+import { GenericReportComponent } from './generic-report/generic-report.component';
+import { PageNotfoundComponent } from './page-notfound/page-notfound.component';
+import { CallRecordingsComponent } from './call-recordings/call-recordings.component';
+import { CdrDownloadComponent } from './cdr-download/cdr-download.component';
+import { CsvDownloadComponent } from './csv-download/csv-download.component';
 
 const routes: Routes = [
+
+  // login, forgot password pages
+  {
+    path: '',
+    component: LoginLayoutComponent,
+    children: [
+      { path: 'server', component: ServerSelectionComponent },
+      { path: 'login', component: LoginComponent },
+    ]
+  },
 
   // application pages
   {
@@ -61,16 +76,12 @@ const routes: Routes = [
       { path: 'reports/cdr', component: CdrReportComponent },
       { path: 'reports/missedcalls', component: MissedcallReportComponent },
 
-    ]
-  },
-
-  // login, forgot password pages
-  {
-    path: '',
-    component: LoginLayoutComponent,
-    children: [
-      { path: 'server', component: ServerSelectionComponent },
-      { path: 'login', component: LoginComponent },
+      { path: 'generic/:groupId/:reportId', component: GenericReportComponent },
+      { path: 'csv/:groupId/:reportId', component: CsvDownloadComponent },
+      { path: 'recordings/:groupId/:reportId', component: CallRecordingsComponent },
+      { path: 'cdr/:groupId/:reportId', component: CdrDownloadComponent },
+      { path: ':groupId/:reportId', component: GenericReportComponent }, // keep at the end of reports
+      { path: '**', component: PageNotfoundComponent },
     ]
   },
 
@@ -92,6 +103,11 @@ const routes: Routes = [
     DatasetsListComponent,
     ExploreDatasetComponent,
     MissedcallReportComponent,
+    GenericReportComponent,
+    PageNotfoundComponent,
+    CallRecordingsComponent,
+    CdrDownloadComponent,
+    CsvDownloadComponent,
   ],
   imports: [
     BrowserModule,
