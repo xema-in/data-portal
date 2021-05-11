@@ -78,6 +78,10 @@ export class BackendService {
     return this.remote.post(this.baseUrl + '/api/Reports/JsonReport/' + id, params);
   }
 
+  getCsvReport(reportId, param: any): Observable<any> {
+    return this.remote.post(this.baseUrl + '/api/Reports/CsvReport/' + reportId, param, { responseType: 'blob' });
+  }
+
   downloadCallRecording(reportId, callId): Observable<any> {
     return this.remote.get(this.baseUrl + '/api/Reports/DownloadCallRecording/' + reportId + '/' + callId, { responseType: 'blob' });
   }
