@@ -86,6 +86,11 @@ export class BackendService {
     return this.remote.get(this.baseUrl + '/api/Reports/CallRecordingPlayBack/' + reportId + '/' + callId, { responseType: 'blob' });
   }
 
+  downloadCdr(reportId, param: any): Observable<any> {
+    return this.remote.post(this.baseUrl + '/api/Reports/CdrDownload2/' + reportId, param, { responseType: 'blob' });
+  }
+
+
 
   cdrslist(param: any): Observable<any> {
     return this.remote.post(this.baseUrl + '/api/SearchCallRecording', param);

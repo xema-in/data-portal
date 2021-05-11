@@ -1,0 +1,44 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>{{reportConfig.name}}</span>
+    <span style="margin: 16px;"></span>
+    <span>{{reportConfig.description}}</span>
+    <span style="margin: 32px;"></span>
+    <mat-chip-list>
+      <mat-chip *ngFor="let perm of permissions">
+        {{perm.name}}
+        <mat-icon matChipRemove *ngIf="perm.scope !== 'owner'">cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+    <span style="margin: 16px;"></span>
+    <button mat-icon-button>
+      <mat-icon>share</mat-icon>
+    </button>
+    <span class="spacer"></span>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row>
+    <form autocomplete="off" [formGroup]="searchForm">
+      <small fxLayout="row" fxLayoutGap="32px" fxLayoutAlign="start center">
+
+        <mat-form-field fxFlex="125px">
+          <input matInput [matDatepicker]="from" (focus)="from.open()" placeholder="From Date"
+            formControlName="fromDate">
+          <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+          <mat-datepicker #from></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="110px">
+          <input matInput [matDatepicker]="to" (focus)="to.open()" placeholder="To Date" formControlName="toDate">
+          <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+          <mat-datepicker #to></mat-datepicker>
+        </mat-form-field>
+
+        <button fxFlex="100px" mat-flat-button color="primary" type="submit" (click)="fetchData()"
+          [disabled]="!searchForm.valid || !searchForm.touched">Download</button>
+
+      </small>
+    </form>
+  </mat-toolbar-row>
+
+</mat-toolbar>

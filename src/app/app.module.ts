@@ -51,6 +51,7 @@ import { MissedcallReportComponent } from './missedcall-report/missedcall-report
 import { GenericReportComponent } from './generic-report/generic-report.component';
 import { PageNotfoundComponent } from './page-notfound/page-notfound.component';
 import { CallRecordingsComponent } from './call-recordings/call-recordings.component';
+import { CdrDownloadComponent } from './cdr-download/cdr-download.component';
 
 const routes: Routes = [
 
@@ -73,6 +74,8 @@ const routes: Routes = [
       { path: 'recordings/search', component: SearchRecordingsComponent },
       { path: 'reports/cdr', component: CdrReportComponent },
       { path: 'reports/missedcalls', component: MissedcallReportComponent },
+
+      { path: 'cdr/:groupId/:reportId', component: CdrDownloadComponent },
       { path: 'recordings/:groupId/:reportId', component: CallRecordingsComponent },
       { path: 'generic/:groupId/:reportId', component: GenericReportComponent },
       { path: ':groupId/:reportId', component: GenericReportComponent }, // keep at the end of reports
@@ -101,6 +104,7 @@ const routes: Routes = [
     GenericReportComponent,
     PageNotfoundComponent,
     CallRecordingsComponent,
+    CdrDownloadComponent,
   ],
   imports: [
     BrowserModule,
