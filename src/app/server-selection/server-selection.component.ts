@@ -16,19 +16,19 @@ export class ServerSelectionComponent implements OnInit {
   constructor(private service: BackendService) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     const url = this.service.getBackendUrl();
-    if (url !== null)
+    if (url !== null) {
       this.service.setAppState({ state: 'ServerFound' });
+    }
     else {
       const detectedServerName = location.hostname + (location.port ? ':' + location.port : '');
       const detectedProtocol = location.protocol;
 
       this.service.ping(detectedProtocol + '//' + detectedServerName).subscribe(() => {
-        this.serverSelectionForm.controls['serverIp'].setValue(detectedServerName);
+        this.serverSelectionForm.controls.serverIp.setValue(detectedServerName);
       });
-
     }
 
   }
@@ -37,7 +37,7 @@ export class ServerSelectionComponent implements OnInit {
     return this.serverSelectionForm.controls[controlName].hasError(errorName);
   }
 
-  saveIpAddress() {
+  saveIpAddress(): void {
     let url = this.serverSelectionForm.value.serverIp;
 
     if (!url.startsWith('http:') && !url.startsWith('https:')) {

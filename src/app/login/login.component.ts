@@ -26,10 +26,10 @@ export class LoginComponent implements OnInit {
     this.manager = service.getBackendUrl();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (!environment.production) {
-      this.loginForm.controls['username'].setValue('tl');
-      this.loginForm.controls['password'].setValue('Vasu123$');
+      this.loginForm.controls.username.setValue(environment.dev.username);
+      this.loginForm.controls.password.setValue(environment.dev.password);
       this.submit();
     }
   }
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls[controlName].hasError(errorName);
   }
 
-  submit() {
+  submit(): void {
 
     this.service.generateAuthToken(this.manager, this.loginForm.value).subscribe(
       (data: any) => {

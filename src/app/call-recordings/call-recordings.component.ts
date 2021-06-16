@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { RecordingsPlaybackDialogComponent } from '../recordings-playback-dialog/recordings-playback-dialog.component';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-call-recordings',
@@ -149,16 +150,20 @@ export class CallRecordingsComponent {
   }
 
   downloadFile(call: any): void {
+    if (!environment.production) {
+      console.log(call);
+    }
+
     this.service
       .downloadCallRecording(this.reportId, call.CallId)
       .subscribe(
         (res: any) => {
           saveAs(res,
-            call.originNumber + '_'
-            + call.dialledNumber + '_'
-            + call.agentId + '_'
-            + call.phoneId + '_'
-            + call.startTimestamp
+            call.OriginNumber + '_'
+            + call.DialledNumber + '_'
+            + call.AgentId + '_'
+            + call.PhoneId + '_'
+            + call.StartTimestamp
             + '.gsm');
         },
         (err) => {

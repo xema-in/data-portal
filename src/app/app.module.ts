@@ -42,12 +42,7 @@ import { AppLayoutComponent } from './app-layout/app-layout.component';
 import { LeftMenuComponent } from './left-menu/left-menu.component';
 import { LogoutControlComponent } from './logout-control/logout-control.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { SearchRecordingsComponent } from './search-recordings/search-recordings.component';
-import { CdrReportComponent } from './cdr-report/cdr-report.component';
 import { RecordingsPlaybackDialogComponent } from './recordings-playback-dialog/recordings-playback-dialog.component';
-import { DatasetsListComponent } from './datasets-list/datasets-list.component';
-import { ExploreDatasetComponent } from './explore-dataset/explore-dataset.component';
-import { MissedcallReportComponent } from './missedcall-report/missedcall-report.component';
 import { GenericReportComponent } from './generic-report/generic-report.component';
 import { PageNotfoundComponent } from './page-notfound/page-notfound.component';
 import { CallRecordingsComponent } from './call-recordings/call-recordings.component';
@@ -58,11 +53,12 @@ const routes: Routes = [
 
   // login, forgot password pages
   {
-    path: '',
+    path: 'a',
     component: LoginLayoutComponent,
     children: [
       { path: 'server', component: ServerSelectionComponent },
       { path: 'login', component: LoginComponent },
+      { path: '**', component: PageNotfoundComponent },
     ]
   },
 
@@ -72,9 +68,6 @@ const routes: Routes = [
     component: AppLayoutComponent,
     children: [
       { path: '', component: DashboardComponent, pathMatch: 'full' },
-      { path: 'recordings/search', component: SearchRecordingsComponent },
-      { path: 'reports/cdr', component: CdrReportComponent },
-      { path: 'reports/missedcalls', component: MissedcallReportComponent },
 
       { path: 'generic/:groupId/:reportId', component: GenericReportComponent },
       { path: 'csv/:groupId/:reportId', component: CsvDownloadComponent },
@@ -97,12 +90,7 @@ const routes: Routes = [
     DashboardComponent,
     LoginComponent,
     ServerSelectionComponent,
-    SearchRecordingsComponent,
-    CdrReportComponent,
     RecordingsPlaybackDialogComponent,
-    DatasetsListComponent,
-    ExploreDatasetComponent,
-    MissedcallReportComponent,
     GenericReportComponent,
     PageNotfoundComponent,
     CallRecordingsComponent,

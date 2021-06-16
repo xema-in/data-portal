@@ -32,11 +32,11 @@ export class RecordingsPlaybackDialogComponent implements OnInit, AfterViewInit 
     private datepipe: DatePipe) {
 
     this.values = [
-      { name: 'ANI', value: data?.originNumber },
-      { name: 'DNI', value: data?.originNumber },
-      { name: 'Agent Id', value: data?.agentId },
-      { name: 'Phone Id', value: data?.phoneId },
-      { name: 'Start Time', value: this.datepipe.transform(data?.startTimestamp, 'dd/MM/yyyy HH:mm:ss') },
+      { name: 'ANI', value: data?.OriginNumber },
+      { name: 'DNI', value: data?.DialledNumber },
+      { name: 'Agent Id', value: data?.AgentId },
+      { name: 'Phone Id', value: data?.PhoneId },
+      { name: 'Start Time', value: this.datepipe.transform(data?.StartTimestamp, 'dd/MM/yyyy HH:mm:ss') },
     ];
 
   }
@@ -48,7 +48,7 @@ export class RecordingsPlaybackDialogComponent implements OnInit, AfterViewInit 
     this.player.repeat = 'none';
 
     this.service
-      .getPlaybackWavFile(this.data.reportId, this.data.callId)
+      .getPlaybackWavFile(this.data.reportId, this.data.CallId)
       .subscribe(
         (res: any) => {
           const link: any = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(res));
