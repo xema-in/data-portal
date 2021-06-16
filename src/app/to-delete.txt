@@ -1,5 +1,0 @@
-cdr-report
-datasets-list
-explore-dataset
-missedcall-report
-search-recordings
