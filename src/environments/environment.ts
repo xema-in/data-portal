@@ -5,6 +5,11 @@
 export const environment = {
   production: false,
   backend: '',
+  dev: {
+    server: 'http://localhost',
+    username: 'vasu',
+    password: '123$',
+  }
 };
 
 /*

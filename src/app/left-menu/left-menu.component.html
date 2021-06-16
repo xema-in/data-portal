@@ -1,7 +1,8 @@
 <mat-accordion>
 
   <span *ngFor="let group of groups">
-    <mat-expansion-panel [expanded]="group.id==1" *ngIf="groupHasReports(group.id)">
+    <mat-expansion-panel *ngIf="groupHasReports(group.id)">
+      <!-- [expanded]="group.id==1" -->
       <mat-expansion-panel-header>
         <mat-panel-title> {{group.name}} </mat-panel-title>
       </mat-expansion-panel-header>
@@ -13,35 +14,5 @@
   </span>
 
 
-
-  <!-- <mat-expansion-panel expanded>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Call Recordings </mat-panel-title>
-    </mat-expansion-panel-header>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/recordings/search" routerLinkActive="active-link">Search</a>
-    </mat-nav-list>
-  </mat-expansion-panel> -->
-
-  <!-- <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Reports </mat-panel-title>
-    </mat-expansion-panel-header>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/reports/cdr" routerLinkActive="active-link">Cdr</a>
-    </mat-nav-list>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/reports/missedcalls" routerLinkActive="active-link">Missed Calls</a>
-    </mat-nav-list>
-  </mat-expansion-panel> -->
-
-  <!-- <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> Datasets </mat-panel-title>
-    </mat-expansion-panel-header>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/datasets" routerLinkActive="active-link">List</a>
-    </mat-nav-list>
-  </mat-expansion-panel> -->
 
 </mat-accordion>

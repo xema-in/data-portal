@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { BackendService } from './backend.service';
 
 @Component({
@@ -12,26 +13,30 @@ export class AppComponent {
 
   constructor(service: BackendService, private router: Router) {
     service.appState.subscribe((state) => {
+
+      if (!environment.production) {
+        console.log(state);
+      }
+
       switch (state.state) {
 
-        case "Unknown": {
-          this.router.navigateByUrl("/server");
+        case 'Unknown': {
+          this.router.navigateByUrl('/a/server');
           break;
         }
 
-        case "ServerFound": {
-          this.router.navigateByUrl("/login");
+        case 'ServerFound': {
+          this.router.navigateByUrl('/a/login');
           break;
         }
 
-        case "LoggedIn": {
-          // this.router.navigateByUrl("/reports/cdr");
-          this.router.navigateByUrl("/recordings/search");
+        case 'LoggedIn': {
+          this.router.navigateByUrl('');
           break;
         }
 
         default: {
-          console.log("Unhandled App State: " + state.state);
+          console.log('Unhandled App State: ' + state.state);
           break;
         }
       }

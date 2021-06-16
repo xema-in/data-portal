@@ -22,18 +22,28 @@ export class BackendService {
   }
 
   getBackendUrl(): string | null {
-    {
+
+    if (!environment.production) {
+      const url = environment.dev.server;
+      if (url !== null && url !== undefined && url !== '') {
+        return url;
+      }
+    }
+
+    if (true) {
       const url = environment.backend;
       if (url !== null && url !== undefined && url !== '') {
         return url;
       }
     }
-    {
+
+    if (true) {
       const url = localStorage.getItem('backend');
       if (url !== null && url !== undefined && url !== '') {
         return url;
       }
     }
+
     return null;
   }
 
@@ -92,28 +102,6 @@ export class BackendService {
 
   downloadCdr(reportId, param: any): Observable<any> {
     return this.remote.post(this.baseUrl + '/api/Reports/CdrDownload2/' + reportId, param, { responseType: 'blob' });
-  }
-
-
-
-  cdrslist(param: any): Observable<any> {
-    return this.remote.post(this.baseUrl + '/api/SearchCallRecording', param);
-  }
-
-  downloadfile(callId): Observable<any> {
-    return this.remote.get(this.baseUrl + '/api/DownloadCallRecording/' + callId, { responseType: 'blob' });
-  }
-
-  getwavfile(callId): Observable<any> {
-    return this.remote.get(this.baseUrl + '/api/CallRecordingPlayBack/' + callId, { responseType: 'blob' });
-  }
-
-  cdrDownload(param: any): Observable<any> {
-    return this.remote.post(this.baseUrl + '/api/SimpleCdrReports/GetFormattedReport', param, { responseType: 'blob' });
-  }
-
-  missedcallsDownload(param: any): Observable<any> {
-    return this.remote.post(this.baseUrl + '/api/MissedCallReport', param);
   }
 
 }

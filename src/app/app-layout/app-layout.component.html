@@ -8,10 +8,10 @@
   </mat-toolbar>
 
   <mat-drawer-container fxFlex>
-    <mat-drawer mode="side" opened disableClose>
+    <mat-drawer mode="side" opened disableClose fxFlex="200px">
       <app-left-menu></app-left-menu>
     </mat-drawer>
-    <mat-drawer-content>
+    <mat-drawer-content fxFlex>
       <router-outlet></router-outlet>
     </mat-drawer-content>
   </mat-drawer-container>
