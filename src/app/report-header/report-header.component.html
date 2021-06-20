@@ -1,0 +1,19 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>{{reportConfig.name}}</span>
+    <span style="margin: 16px;"></span>
+    <span>{{reportConfig.description}}</span>
+    <span style="margin: 32px;"></span>
+    <mat-chip-list>
+      <mat-chip *ngFor="let perm of permissions">
+        {{perm.name}}
+        <mat-icon matChipRemove *ngIf="perm.scope !== 'Owner'" (click)="removePermission(perm)">cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+    <span style="margin: 16px;"></span>
+    <button mat-icon-button>
+      <mat-icon>share</mat-icon>
+    </button>
+    <span class="spacer"></span>
+  </mat-toolbar-row>
+</mat-toolbar>

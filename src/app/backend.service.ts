@@ -104,4 +104,8 @@ export class BackendService {
     return this.remote.post(this.baseUrl + '/api/Reports/CdrDownload2/' + reportId, param, { responseType: 'blob' });
   }
 
+  removePermission(id: number, params: { scope: string, name: string }): Observable<any> {
+    return this.remote.post(this.baseUrl + '/api/Reports/RemovePermission/' + id, params);
+  }
+
 }
