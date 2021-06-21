@@ -12,6 +12,7 @@ export class BackendService {
 
   private baseUrl: string;
   private token: string;
+  private userId: string;
 
   public appState = new BehaviorSubject<AppState>({ state: 'Unknown' });
 
@@ -56,6 +57,7 @@ export class BackendService {
   }
 
   generateAuthToken(baseUrl: string, credentials: Credentials): Observable<any> {
+    this.userId = credentials.username;
     return this.remote.post(baseUrl + '/api/Account/LoginAgent2', credentials);
   }
 
@@ -66,6 +68,10 @@ export class BackendService {
 
   getToken(): string {
     return this.token;
+  }
+
+  getCurrentUserId(): string {
+    return this.userId;
   }
 
   disconnect(): void {
@@ -106,6 +112,10 @@ export class BackendService {
 
   removePermission(id: number, params: { scope: string, name: string }): Observable<any> {
     return this.remote.post(this.baseUrl + '/api/Reports/RemovePermission/' + id, params);
+  }
+
+  addPermission(id: number, params: { scope: string, name: string }): Observable<any> {
+    return this.remote.post(this.baseUrl + '/api/Reports/AddPermission/' + id, params);
   }
 
 }
