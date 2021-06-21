@@ -34,8 +34,6 @@ export class GenericReportComponent implements OnInit {
     search: false,
   };
 
-  permissions: { scope: string, name: string }[] = [];
-
   dataSource: any;
   displayedColumns = [];
 
@@ -69,20 +67,6 @@ export class GenericReportComponent implements OnInit {
           this.searchForm.addControl('toDate', new FormControl('', Validators.required));
           this.enabledFilterControls.toDate = this.enabledFilterControls.search = true;
         }
-
-        // evaluate permissions
-        this.permissions = [];
-        const perms: string[] = this.reportConfig.permissions?.split(';');
-        perms.forEach((perm) => {
-          const parts: string[] = perm.split(':');
-          if (parts.length === 2) {
-            let scope: string;
-            if (parts[0].toUpperCase() === 'OWNER') { scope = 'owner'; }
-            else if (parts[0].toUpperCase() === 'USER') { scope = 'user'; }
-            else if (parts[0].toUpperCase() === 'ROLE') { scope = 'group'; }
-            this.permissions.push({ scope, name: parts[1] });
-          }
-        });
 
       });
 

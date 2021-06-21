@@ -26,8 +26,6 @@ export class CsvDownloadComponent implements OnInit {
     download: false,
   };
 
-  permissions: { scope: string, name: string }[] = [];
-
   constructor(private route: ActivatedRoute, private service: BackendService) {
     this.route.params.subscribe(params => {
       this.groupId = params.groupId;
@@ -58,20 +56,6 @@ export class CsvDownloadComponent implements OnInit {
           this.searchForm.addControl('toDate', new FormControl('', Validators.required));
           this.enabledFilterControls.toDate = this.enabledFilterControls.download = true;
         }
-
-        // evaluate permissions
-        this.permissions = [];
-        const perms: string[] = this.reportConfig.permissions?.split(';');
-        perms.forEach((perm) => {
-          const parts: string[] = perm.split(':');
-          if (parts.length === 2) {
-            let scope: string;
-            if (parts[0].toUpperCase() === 'OWNER') { scope = 'owner'; }
-            else if (parts[0].toUpperCase() === 'USER') { scope = 'user'; }
-            else if (parts[0].toUpperCase() === 'ROLE') { scope = 'group'; }
-            this.permissions.push({ scope, name: parts[1] });
-          }
-        });
 
       });
 

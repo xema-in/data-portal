@@ -48,6 +48,7 @@ import { PageNotfoundComponent } from './page-notfound/page-notfound.component';
 import { CallRecordingsComponent } from './call-recordings/call-recordings.component';
 import { CdrDownloadComponent } from './cdr-download/cdr-download.component';
 import { CsvDownloadComponent } from './csv-download/csv-download.component';
+import { ReportHeaderComponent } from './report-header/report-header.component';
 
 const routes: Routes = [
 
@@ -96,6 +97,7 @@ const routes: Routes = [
     CallRecordingsComponent,
     CdrDownloadComponent,
     CsvDownloadComponent,
+    ReportHeaderComponent,
   ],
   imports: [
     BrowserModule,
