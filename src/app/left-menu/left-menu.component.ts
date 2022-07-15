@@ -17,14 +17,14 @@ export class LeftMenuComponent implements OnInit {
     this.service.getEnabledReports().subscribe((reports: any) => { this.reports = reports; });
   }
 
-  groupHasReports(groupId): boolean {
+  groupHasReports(groupId: any): boolean {
     if (this.reports.find(x => x.reportGroupId === groupId)) {
       return true;
     }
     return false;
   }
 
-  getFilteredReports(groupId): any[] {
+  getFilteredReports(groupId: any): any[] {
     return this.reports.filter((r) => {
       return r.reportGroupId === groupId;
     });

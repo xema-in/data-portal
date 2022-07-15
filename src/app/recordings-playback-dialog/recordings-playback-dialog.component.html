@@ -11,9 +11,9 @@
 
 <div style="margin: 32px;"></div>
 
-<ngx-audio-player [playlist]="playlist" [autoPlay]="true" [displayTitle]="false" [displayPlaylist]="false"
+<xe-audio-player [playlist]="playlist" [autoPlay]="true" [displayTitle]="false" [displayPlaylist]="false"
   [expanded]="false" [displayVolumeControls]="true" [displayRepeatControls]="false" [displayArtist]="false"
   [displayDuration]="false" [disablePositionSlider]="false" muted="muted" (trackEnded)="onEnded($event)">
-</ngx-audio-player>
+</xe-audio-player>
 
 <span *ngIf="!hasFile">Downloading audio ...</span>

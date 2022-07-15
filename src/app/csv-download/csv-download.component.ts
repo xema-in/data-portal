@@ -11,8 +11,8 @@ import { BackendService } from '../backend.service';
 })
 export class CsvDownloadComponent implements OnInit {
 
-  groupId: number;
-  reportId: number;
+  groupId!: number;
+  reportId!: number;
 
   reportConfig: any = {};
 
@@ -27,7 +27,7 @@ export class CsvDownloadComponent implements OnInit {
   };
 
   constructor(private route: ActivatedRoute, private service: BackendService) {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params: any) => {
       this.groupId = params.groupId;
       this.reportId = params.reportId;
 

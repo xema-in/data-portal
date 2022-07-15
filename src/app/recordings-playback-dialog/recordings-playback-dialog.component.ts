@@ -2,10 +2,10 @@ import { DatePipe } from '@angular/common';
 import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AudioPlayerComponent, Track } from 'ngx-audio-player';
-import { AudioPlayerService } from 'ngx-audio-player/lib/service/audio-player-service/audio-player.service';
+import { AudioPlayerComponent, Track } from '@xema/audio-player';
 import Swal from 'sweetalert2';
 import { BackendService } from '../backend.service';
+import { KeyValuePair } from '../interfaces/key-value-pair';
 
 @Component({
   selector: 'app-recordings-playback-dialog',
@@ -14,9 +14,9 @@ import { BackendService } from '../backend.service';
   providers: [DatePipe]
 })
 export class RecordingsPlaybackDialogComponent implements OnInit, AfterViewInit {
-  @ViewChild(AudioPlayerComponent, { static: false }) player: AudioPlayerComponent;
+  @ViewChild(AudioPlayerComponent, { static: false }) player!: AudioPlayerComponent;
 
-  values = [];
+  values: KeyValuePair[] = [];
 
   hasFile = false;
   playlist: Track[] = [{
@@ -66,7 +66,7 @@ export class RecordingsPlaybackDialogComponent implements OnInit, AfterViewInit 
 
   }
 
-  onEnded(event): void {
+  onEnded(event: any): void {
   }
 
   onClose(): void {

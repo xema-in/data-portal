@@ -5,14 +5,15 @@ import { environment } from 'src/environments/environment';
 import { AppState } from './interfaces/app-state';
 import { Credentials } from './interfaces/credentials';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
 
-  private baseUrl: string;
-  private token: string;
-  private userId: string;
+  private baseUrl!: string;
+  private token!: string | null;
+  private userId!: string;
 
   public appState = new BehaviorSubject<AppState>({ state: 'Unknown' });
 
@@ -66,7 +67,7 @@ export class BackendService {
     this.token = token;
   }
 
-  getToken(): string {
+  getToken(): string | null {
     return this.token;
   }
 
@@ -94,19 +95,19 @@ export class BackendService {
     return this.remote.post(this.baseUrl + '/api/Reports/JsonReport/' + id, params);
   }
 
-  getCsvReport(reportId, param: any): Observable<any> {
+  getCsvReport(reportId: number, param: any): Observable<any> {
     return this.remote.post(this.baseUrl + '/api/Reports/CsvReport/' + reportId, param, { responseType: 'blob' });
   }
 
-  downloadCallRecording(reportId, callId): Observable<any> {
+  downloadCallRecording(reportId: number, callId: string): Observable<any> {
     return this.remote.get(this.baseUrl + '/api/Reports/DownloadCallRecording/' + reportId + '/' + callId, { responseType: 'blob' });
   }
 
-  getPlaybackWavFile(reportId, callId): Observable<any> {
+  getPlaybackWavFile(reportId: number, callId: string): Observable<any> {
     return this.remote.get(this.baseUrl + '/api/Reports/CallRecordingPlayBack/' + reportId + '/' + callId, { responseType: 'blob' });
   }
 
-  downloadCdr(reportId, param: any): Observable<any> {
+  downloadCdr(reportId: number, param: any): Observable<any> {
     return this.remote.post(this.baseUrl + '/api/Reports/CdrDownload2/' + reportId, param, { responseType: 'blob' });
   }
 
