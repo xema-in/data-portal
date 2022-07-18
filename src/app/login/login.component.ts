@@ -12,7 +12,7 @@ import { BackendService } from '../backend.service';
 export class LoginComponent implements OnInit {
 
 
-  loginForm: FormGroup = new FormGroup({
+  loginForm = new FormGroup({
     username: new FormControl('', [
       Validators.required, Validators.maxLength(60),
       // Validators.pattern('[a-zA-Z1-9]*')
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   manager: string;
 
   constructor(private service: BackendService) {
-    this.manager = service.getBackendUrl();
+    this.manager = service.getBackendUrl() ?? '';
   }
 
   ngOnInit(): void {
@@ -35,12 +35,16 @@ export class LoginComponent implements OnInit {
   }
 
   public hasError = (controlName: string, errorName: string) => {
-    return this.loginForm.controls[controlName].hasError(errorName);
+    // return this.loginForm.controls[controlName].hasError(errorName);
+    return false;
   }
 
   submit(): void {
 
-    this.service.generateAuthToken(this.manager, this.loginForm.value).subscribe(
+    this.service.generateAuthToken(this.manager, {
+      username: this.loginForm.value.username ?? '',
+      password: this.loginForm.value.password ?? '',
+    }).subscribe(
       (data: any) => {
         this.service.setupConnection(this.manager, data.auth_token);
         this.service.setAppState({ state: 'LoggedIn' });

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -31,7 +31,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 
-import { NgxAudioPlayerModule } from 'ngx-audio-player';
+import { NgxAudioPlayerModule } from '@xema/audio-player';
 
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from './auth.interceptor';

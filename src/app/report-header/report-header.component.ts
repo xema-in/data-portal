@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import Swal from 'sweetalert2';
 import { BackendService } from '../backend.service';
+import { Permission } from '../interfaces/permission';
 
 @Component({
   selector: 'app-report-header',
@@ -11,13 +12,13 @@ export class ReportHeaderComponent implements OnChanges {
 
   @Input() reportConfig: any;
 
-  permissions: { scope: string, name: string, owner: boolean }[] = [];
+  permissions: Permission[] = [];
   reportOwner = false;
 
   constructor(private service: BackendService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.calculatePermissions(changes.reportConfig.currentValue);
+    this.calculatePermissions(changes['reportConfig'].currentValue);
   }
 
   calculatePermissions(config: any): void {
@@ -45,12 +46,13 @@ export class ReportHeaderComponent implements OnChanges {
 
   }
 
-  removePermission({ scope, name }): void {
-    this.service.removePermission(this.reportConfig.id, { scope, name }).subscribe(() => {
-      this.updatePermissions();
-    }, err => {
-      Swal.fire({ icon: 'error', title: 'Oops...', text: err.message });
-    });
+  removePermission(perm: Permission): void {
+    this.service.removePermission(this.reportConfig.id, { scope: perm.scope, name: perm.name })
+      .subscribe(() => {
+        this.updatePermissions();
+      }, err => {
+        Swal.fire({ icon: 'error', title: 'Oops...', text: err.message });
+      });
   }
 
   addPermission(): void {

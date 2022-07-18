@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
+import * as saveAs from 'file-saver';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -19,12 +19,12 @@ import { environment } from 'src/environments/environment';
 })
 export class CallRecordingsComponent {
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild('TABLE') table: ElementRef;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  @ViewChild('TABLE') table!: ElementRef;
 
-  groupId: number;
-  reportId: number;
+  groupId!: number;
+  reportId!: number;
 
   reportConfig: any = {};
   columnAltNames: any = {};
@@ -42,10 +42,10 @@ export class CallRecordingsComponent {
   };
 
   dataSource: any;
-  displayedColumns = [];
+  displayedColumns: string[] = [];
 
   constructor(private route: ActivatedRoute, private service: BackendService, public dialog: MatDialog) {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params: any) => {
       this.groupId = params.groupId;
       this.reportId = params.reportId;
 

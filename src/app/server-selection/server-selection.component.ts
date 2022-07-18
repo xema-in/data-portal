@@ -9,7 +9,7 @@ import { BackendService } from '../backend.service';
 })
 export class ServerSelectionComponent implements OnInit {
 
-  public serverSelectionForm: FormGroup = new FormGroup({
+  serverSelectionForm = new FormGroup({
     serverIp: new FormControl('', [Validators.required, Validators.maxLength(100)]),
   });
 
@@ -34,11 +34,12 @@ export class ServerSelectionComponent implements OnInit {
   }
 
   public hasError = (controlName: string, errorName: string) => {
-    return this.serverSelectionForm.controls[controlName].hasError(errorName);
+    // return this.serverSelectionForm.controls[controlName].hasError(errorName);
+    return false;
   }
 
   saveIpAddress(): void {
-    let url = this.serverSelectionForm.value.serverIp;
+    let url = this.serverSelectionForm.value.serverIp ?? '';
 
     if (!url.startsWith('http:') && !url.startsWith('https:')) {
       url = location.protocol + '//' + url;
