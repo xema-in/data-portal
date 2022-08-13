@@ -65,7 +65,7 @@ export class ReportHeaderComponent implements OnChanges {
       showCancelButton: true,
       confirmButtonText: 'Share',
       showLoaderOnConfirm: true,
-      preConfirm: (username) => {
+      preConfirm: (username: any) => {
 
         this.service.addPermission(
           this.reportConfig.id, { scope: 'User', name: username }
