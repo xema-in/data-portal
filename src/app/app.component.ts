@@ -12,7 +12,7 @@ export class AppComponent {
   title = 'data-portal';
 
   constructor(service: BackendService, private router: Router) {
-    service.appState.subscribe((state) => {
+    service.appState.subscribe((state: any) => {
 
       if (!environment.production) {
         console.log(state);

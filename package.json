@@ -22,11 +22,12 @@
     "@angular/platform-browser": "^14.1.2",
     "@angular/platform-browser-dynamic": "^14.1.2",
     "@angular/router": "^14.1.2",
+    "@sweetalert2/ngx-sweetalert2": "^11.0.0",
     "@xema/audio-player": "^0.0.1",
     "file-saver": "^2.0.5",
     "material-design-icons": "^3.0.1",
     "rxjs": "~7.5.0",
-    "sweetalert2": "^11.4.23",
+    "sweetalert2": "^11.4.26",
     "tslib": "^2.3.0",
     "xlsx": "^0.18.5",
     "zone.js": "~0.11.4"

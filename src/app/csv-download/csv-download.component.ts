@@ -31,7 +31,7 @@ export class CsvDownloadComponent implements OnInit {
       this.groupId = params.groupId;
       this.reportId = params.reportId;
 
-      this.service.getReportConfig(this.reportId).subscribe((config) => {
+      this.service.getReportConfig(this.reportId).subscribe((config: any) => {
         this.reportConfig = config;
 
         // process filter options
