@@ -37,6 +37,16 @@ jobs:
           npm run prod
           find ./dist
 
+      - name: Package
+        run: | 
+          tar -zcvf package.zip -C ./dist/data-portal .
+          
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: package.zip
+          tag_name: v1.0
+
       - name: Setup Pages
         uses: actions/configure-pages@v1
       - name: Upload artifact
